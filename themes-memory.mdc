@@ -1,0 +1,53 @@
+---
+description: Saved custom Cursor themes and installation steps
+alwaysApply: true
+---
+
+# Cursor Themes Memory
+
+When user asks to create or add any Cursor color theme, always follow the install workflow below so the theme appears in `Color Themes`.
+
+## Default Workflow For New Themes
+
+1. Create extension folder: `%APPDATA%\Cursor\extensions\<publisher>.<theme-id>-<version>`.
+2. Create `package.json` with:
+   - `name`, `displayName`, `publisher`, `version`, `engines.vscode`
+   - `categories: ["Themes"]`
+   - `contributes.themes[0]` with `label`, `uiTheme: "vs-dark"` (or light), `path`
+3. Create theme file at `themes/<theme-file>.json` with:
+   - `"$schema": "vscode://schemas/color-theme"`
+   - `name`, `type`, `colors`, `tokenColors` (or `semanticTokenColors`)
+4. Create `.vsixmanifest` in extension root.
+5. Register extension in `%APPDATA%\Cursor\extensions\extensions.json`:
+   - add object with `identifier.id = "<publisher>.<theme-id>"`
+   - include `location` (`fsPath`, `external`, `path`, `scheme`) and `metadata.source = "vsix"`
+6. Validate JSON files (`package.json`, theme json, `extensions.json`).
+7. Reload Cursor (`Developer: Reload Window`) and verify theme in `File -> Preferences -> Themes -> Color Themes`.
+
+## Reuse Existing Installer
+
+- If working from this repo pack, prefer `install-themes.ps1` for known themes.
+- For a newly created theme, either:
+  - extend `install-themes.ps1` with the new folder and extension entry, or
+  - perform manual registration using step 5 above.
+
+## Saved Themes
+
+- Neon Balanced Dark
+  - Extension ID: `testa.neon-balanced-theme`
+  - Folder in pack: `themes/testa.neon-balanced-theme-0.0.1`
+- Neon Pink Balanced Dark
+  - Extension ID: `testa.neon-pink-balanced-theme-v3`
+  - Folder in pack: `themes/testa.neon-pink-balanced-theme-v3-0.0.1`
+- Matrix Agent Dark
+  - Extension ID: `testa.matrix-agent-theme`
+  - Folder in pack: `themes/testa.matrix-agent-theme-0.0.1`
+
+## Re-Add Procedure
+
+1. Copy extension folder from `themes/` to `%APPDATA%\Cursor\extensions\`.
+2. Add `package.json` with `contributes.themes`.
+3. Add `themes/<name>-color-theme.json` with `colors` and `tokenColors`.
+4. Add `.vsixmanifest` in extension root.
+5. Register extension in `%APPDATA%\Cursor\extensions\extensions.json`.
+6. Reload Cursor window and pick theme in `File -> Preferences -> Themes -> Color Themes`.
