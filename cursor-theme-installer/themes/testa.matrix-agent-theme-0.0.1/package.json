@@ -1,0 +1,27 @@
+{
+  "name": "matrix-agent-theme",
+  "displayName": "Matrix Agent Dark",
+  "description": "Matrix-style dark theme for Cursor focused on code highlighting and agent panel UI.",
+  "version": "0.0.1",
+  "publisher": "testa",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Matrix Agent Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/matrix-agent-color-theme.json"
+      }
+    ]
+  },
+  "__metadata": {
+    "installedTimestamp": 1774512200000,
+    "targetPlatform": "undefined",
+    "size": 12000
+  }
+}

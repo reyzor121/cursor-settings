@@ -1,0 +1,27 @@
+{
+	"name": "neon-pink-balanced-theme-v3",
+	"displayName": "Neon Pink Balanced Dark V3",
+	"description": "Readable neon-pink dark theme for Cursor with no cold blue accents.",
+	"version": "0.0.1",
+	"publisher": "testa",
+	"engines": {
+		"vscode": "^1.80.0"
+	},
+	"categories": [
+		"Themes"
+	],
+	"contributes": {
+		"themes": [
+			{
+				"label": "Neon Pink Balanced Dark V3",
+				"uiTheme": "vs-dark",
+				"path": "./themes/neon-pink-color-theme.json"
+			}
+		]
+	},
+	"__metadata": {
+		"installedTimestamp": 1774510668848,
+		"targetPlatform": "undefined",
+		"size": 8557
+	}
+}

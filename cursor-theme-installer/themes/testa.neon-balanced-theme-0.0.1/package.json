@@ -1,0 +1,27 @@
+{
+	"name": "neon-balanced-theme",
+	"displayName": "Neon Balanced Dark",
+	"description": "Bright neon-balanced dark theme for Cursor/VS Code.",
+	"version": "0.0.1",
+	"publisher": "testa",
+	"engines": {
+		"vscode": "^1.80.0"
+	},
+	"categories": [
+		"Themes"
+	],
+	"contributes": {
+		"themes": [
+			{
+				"label": "Neon Balanced Dark",
+				"uiTheme": "vs-dark",
+				"path": "./themes/neon-balanced-color-theme.json"
+			}
+		]
+	},
+	"__metadata": {
+		"installedTimestamp": 1774509086728,
+		"targetPlatform": "undefined",
+		"size": 8453
+	}
+}

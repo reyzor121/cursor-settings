@@ -1,6 +1,6 @@
-# Cursor Settings Themes Pack
+# Cursor Theme Skill Pack
 
-This folder is a portable package for installing your custom Cursor themes on another computer.
+This pack can be transferred as a single skill folder and used on another computer with Cursor.
 
 ## Included themes
 
@@ -8,25 +8,26 @@ This folder is a portable package for installing your custom Cursor themes on an
 - `Neon Pink Balanced Dark` (extension label: `Neon Pink Balanced Dark V3`)
 - `Matrix Agent Dark`
 
-## Folder structure
+## Skill folder (self-contained)
 
-- `themes/` - full extension folders ready to copy
-- `install-themes.ps1` - automatic installer for Windows Cursor
-- `themes-memory.mdc` - persistent AI memory/rule with IDs and re-add flow
+- `cursor-theme-installer/SKILL.md` - AI instructions and install workflow
+- `cursor-theme-installer/scripts/install-themes.ps1` - installer script
+- `cursor-theme-installer/themes/*` - bundled theme extensions
 
-## Install on another computer (Windows)
+## Use on another computer (single folder)
 
 1. Close Cursor.
-2. Copy this whole `cursor-settings` folder to the new machine.
-3. Open PowerShell in this folder.
+2. Copy `cursor-theme-installer/` to:
+   - `%USERPROFILE%\.cursor\skills\cursor-theme-installer\`
+3. Open PowerShell in `%USERPROFILE%\.cursor\skills\cursor-theme-installer\`.
 4. Run:
-   - `powershell -ExecutionPolicy Bypass -File .\install-themes.ps1`
+   - `powershell -ExecutionPolicy Bypass -File .\scripts\install-themes.ps1`
 5. Start Cursor and open:
    - `File -> Preferences -> Themes -> Color Themes`
 6. Select one of the three themes.
 
 ## Manual install (if script is blocked)
 
-1. Copy each folder from `themes/` to `%APPDATA%\Cursor\extensions\`.
+1. Copy each folder from `cursor-theme-installer/themes/` to `%APPDATA%\Cursor\extensions\`.
 2. Merge/add entries in `%APPDATA%\Cursor\extensions\extensions.json`.
 3. Restart Cursor and choose the theme.
