@@ -1,8 +1,23 @@
 param(
-  [string]$CursorExtensionsPath = "$env:APPDATA\Cursor\extensions"
+  # Cursor resolves extensions from ~/.cursor/extensions (not AppData\Roaming\Cursor\extensions).
+  [string]$CursorExtensionsPath = (Join-Path $env:USERPROFILE ".cursor\extensions")
 )
 
 $ErrorActionPreference = "Stop"
+
+function Get-ExtensionLocationUriFields {
+  param([string]$WindowsFolderPath)
+  $full = [System.IO.Path]::GetFullPath($WindowsFolderPath)
+  $u = [System.Uri]::new($full)
+  $external = $u.AbsoluteUri
+  $forward = ($full -replace '\\', '/')
+  if ($forward -match '^([A-Za-z]):(/.*)$') {
+    $pathProp = '/' + $Matches[1].ToLower() + ':' + $Matches[2]
+  } else {
+    $pathProp = $forward
+  }
+  return @{ external = $external; path = $pathProp }
+}
 
 $sourceRoot = Join-Path $PSScriptRoot "themes"
 $themeFolders = @(
@@ -27,7 +42,13 @@ foreach ($folder in $themeFolders) {
 
 $extensionsJsonPath = Join-Path $CursorExtensionsPath "extensions.json"
 if (Test-Path $extensionsJsonPath) {
-  $extensions = Get-Content -Raw $extensionsJsonPath | ConvertFrom-Json
+  $raw = (Get-Content -Raw $extensionsJsonPath).Trim()
+  if ([string]::IsNullOrWhiteSpace($raw) -or $raw -eq '[]') {
+    $extensions = @()
+  } else {
+    $parsed = $raw | ConvertFrom-Json
+    $extensions = if ($parsed -is [System.Array]) { @($parsed) } else { @($parsed) }
+  }
 } else {
   $extensions = @()
 }
@@ -43,9 +64,8 @@ function Ensure-ThemeEntry {
   $existing = $Entries | Where-Object { $_.identifier.id -eq $Id }
   if ($existing) { return $Entries }
 
-  $windowsPath = Join-Path $CursorExtensionsPath $Folder
-  $uriPath = "/c:/Users/$env:USERNAME/.cursor/extensions/$Folder"
-  $external = "file:///c%3A/Users/$env:USERNAME/.cursor/extensions/$Folder"
+  $windowsPath = [System.IO.Path]::GetFullPath((Join-Path $CursorExtensionsPath $Folder))
+  $uris = Get-ExtensionLocationUriFields -WindowsFolderPath $windowsPath
 
   $newEntry = [PSCustomObject]@{
     identifier = [PSCustomObject]@{ id = $Id }
@@ -54,8 +74,8 @@ function Ensure-ThemeEntry {
       '$mid' = 1
       fsPath = $windowsPath
       _sep = 1
-      external = $external
-      path = $uriPath
+      external = $uris.external
+      path = $uris.path
       scheme = "file"
     }
     relativeLocation = $Folder

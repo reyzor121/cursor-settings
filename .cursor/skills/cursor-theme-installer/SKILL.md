@@ -28,8 +28,10 @@ For these themes, prefer running the bundled installer (see [Re-add saved theme]
 
 ### 1. Create extension folder
 
+Cursor loads user extensions from **`%USERPROFILE%\.cursor\extensions`** (not `%APPDATA%\Cursor\extensions`).
+
 ```
-%APPDATA%\Cursor\extensions\<publisher>.<theme-id>-<version>\
+%USERPROFILE%\.cursor\extensions\<publisher>.<theme-id>-<version>\
 ```
 
 ### 2. Create `package.json`
@@ -78,9 +80,9 @@ Minimum structure:
 
 Copy structure from any existing theme manifest, replacing `Id`, `DisplayName`, `Description`.
 
-### 5. Register in `%APPDATA%\Cursor\extensions\extensions.json`
+### 5. Register in `%USERPROFILE%\.cursor\extensions\extensions.json`
 
-Add entry (match the exact shape of existing entries):
+Add entry (match the exact shape of existing entries). Use the real resolved path under `.cursor\extensions` for `fsPath`, `external`, and `path`:
 
 ```json
 {
@@ -88,10 +90,10 @@ Add entry (match the exact shape of existing entries):
   "version": "0.0.1",
   "location": {
     "$mid": 1,
-    "fsPath": "C:\\Users\\<user>\\AppData\\Roaming\\Cursor\\extensions\\<folder>",
+    "fsPath": "C:\\Users\\<user>\\.cursor\\extensions\\<folder>",
     "_sep": 1,
-    "external": "file:///c%3A/Users/<user>/AppData/Roaming/Cursor/extensions/<folder>",
-    "path": "/c:/Users/<user>/AppData/Roaming/Cursor/extensions/<folder>",
+    "external": "file:///c%3A/Users/<user>/.cursor/extensions/<folder>",
+    "path": "/c:/Users/<user>/.cursor/extensions/<folder>",
     "scheme": "file"
   },
   "relativeLocation": "<folder>",
